@@ -1,0 +1,507 @@
+/* ==========================================================================
+   1. RESET STYLE DASAR & VARIABEL
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ffe5ec 0%, #ffc2d1 40%, #e8a7f7 100%);
+    overflow-x: hidden;
+    padding: 20px;
+    position: relative;
+}
+
+/* ==========================================================================
+   2. WADAH UTAMA UTK EFEK GERAK (DIPOSISIKAN DI DEPAN KOTAK TULISAN)
+   ========================================================================== */
+.animation-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none; 
+    z-index: 999; 
+    overflow: hidden;
+}
+
+/* --- Animasi 1: Kelopak Bunga Jatuh Ke Bawah --- */
+.petal {
+    position: absolute;
+    background: linear-gradient(to bottom right, #ffb3c6, #ff8fab);
+    border-radius: 150% 0 150% 150%;
+    opacity: 0.6;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    0% { 
+        transform: translateY(-20px) rotate(0deg); 
+        opacity: 0; 
+    }
+    10% { 
+        opacity: 0.8; 
+    }
+    90% { 
+        opacity: 0.8; 
+    }
+    100% { 
+        transform: translateY(105vh) translateX(80px) rotate(360deg); 
+        opacity: 0; 
+    }
+}
+
+/* --- Animasi 2: Efek Love Melayang Ke Atas Melewati Kotak --- */
+.floating-love {
+    position: absolute;
+    color: #ff477e;
+    font-size: 20px;
+    opacity: 0;
+    animation: floatUp ease-in-out forwards;
+}
+
+@keyframes floatUp {
+    0% { 
+        transform: translateY(105vh) scale(0.5); 
+        opacity: 0; 
+    }
+    15% { 
+        opacity: 0.85; 
+    }
+    85% { 
+        opacity: 0.85; 
+    }
+    100% { 
+        transform: translateY(-5vh) translateX(-30px) scale(1.3); 
+        opacity: 0; 
+    }
+}
+
+/* --- Animasi 3: Efek Bintang Berkilau (Sparkles) --- */
+.sparkle {
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #fff, 0 0 20px #ff758f;
+    opacity: 0;
+    animation: flash ease-in-out forwards;
+}
+
+@keyframes flash {
+    0%, 100% { 
+        opacity: 0; 
+        transform: scale(0.3); 
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1); 
+    }
+}
+
+/* ==========================================================================
+   3. DESAIN CARD UTAMA (ULTRA GLASSMORPHISM TRANSPARAN)
+   ========================================================================== */
+.main-card {
+    background: rgba(255, 255, 255, 0.22); 
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.5); 
+    border-radius: 24px;
+    width: 100%;
+    max-width: 540px;
+    min-height: 550px;
+    padding: 30px 25px;
+    box-shadow: 0 20px 40px rgba(255, 105, 180, 0.15); 
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    animation: cardAppear 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes cardAppear {
+    from { 
+        opacity: 0; 
+        transform: translateY(30px) scale(0.95); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+    }
+}
+
+/* ==========================================================================
+   4. MENU NAVIGASI TABS LAMAN
+   ========================================================================== */
+.nav-tabs {
+    display: flex;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 50px;
+    padding: 4px;
+    margin-bottom: 25px; 
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    padding: 8px 16px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: #4a4a4a;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex: 1;
+    text-align: center;
+}
+
+.tab-btn.active {
+    background: linear-gradient(45deg, #ff477e, #ff758f);
+    color: white;
+    box-shadow: 0 4px 12px rgba(255, 71, 126, 0.3);
+}
+
+/* Container Desain Tombol Musik di bawah Hati */
+.music-controller-wrapper {
+    width: 100%;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.btn-music {
+    background: linear-gradient(45deg, #ff477e, #ff758f);
+    color: white;
+    border: none;
+    padding: 8px 24px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 71, 126, 0.25);
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.btn-music:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 71, 126, 0.4);
+}
+
+/* ==========================================================================
+   5. PENGATURAN AREA KONTEN LAMAN
+   ========================================================================== */
+.tab-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.page-section {
+    display: none;
+    width: 100%;
+    text-align: center;
+}
+
+.page-section.active {
+    display: block;
+    animation: sectionFade 0.6s ease-in-out forwards;
+}
+
+@keyframes sectionFade {
+    from { 
+        opacity: 0; 
+        transform: scale(0.97); 
+    }
+    to { 
+        opacity: 1; 
+        transform: scale(1); 
+    }
+}
+
+/* ==========================================================================
+   6. DETAIL PER LAMAN LAMAN
+   ========================================================================== */
+
+/* --- LAMAN 1: HOME --- */
+.photo-wrapper {
+    position: relative;
+    width: 130px;
+    height: 130px;
+    margin: 0 auto 15px auto;
+}
+
+.profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 8px 25px rgba(219, 68, 118, 0.25);
+}
+
+.graduation-cap {
+    position: absolute;
+    top: -12px;
+    right: -2px;
+    font-size: 2.3rem;
+    transform: rotate(15deg);
+    animation: capBounce 2s infinite alternate;
+}
+
+@keyframes capBounce {
+    from { transform: rotate(15deg) translateY(0); }
+    to { transform: rotate(15deg) translateY(-8px); }
+}
+
+.romantic-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.8rem;
+    color: #ff3366;
+    text-shadow: 1px 1px 10px rgba(255,255,255,0.4);
+    margin-bottom: 5px;
+}
+
+.sub-title {
+    font-size: 0.9rem;
+    color: #333;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+}
+
+.short-desc {
+    font-size: 0.9rem;
+    color: #444;
+    line-height: 1.6;
+}
+
+.heart-pulse {
+    font-size: 1.6rem;
+    margin-top: 10px;
+    animation: pulse 0.8s infinite alternate;
+    display: inline-block;
+}
+
+@keyframes pulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.25); filter: drop-shadow(0 0 8px #ff477e); }
+}
+
+/* --- LAMAN 2: GALLERY (KOTAK POLAROID ROMANTIS) --- */
+.gallery-top-decor {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #ff477e;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    text-shadow: 0 0 8px rgba(255, 71, 126, 0.2);
+}
+
+.section-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.4rem;
+    color: #ff3366;
+}
+
+.divider {
+    height: 2px;
+    width: 50%;
+    background: linear-gradient(to right, transparent, #ff758f, transparent);
+    margin: 8px auto 15px auto;
+}
+
+.section-intro {
+    font-size: 0.88rem;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+/* Pembungkus scroll galeri vertikal */
+.grid-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-height: 310px;
+    overflow-y: auto;
+    padding: 5px 10px 15px 5px;
+}
+
+.grid-gallery::-webkit-scrollbar { 
+    width: 4px; 
+}
+.grid-gallery::-webkit-scrollbar-thumb { 
+    background: rgba(255, 117, 143, 0.6); 
+    border-radius: 10px; 
+}
+
+/* Desain Kotak Polaroid Romantis */
+.gallery-polaroid {
+    background: rgba(255, 255, 255, 0.75);
+    padding: 12px 12px 18px 12px;
+    border-radius: 4px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(255, 182, 193, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    transition: transform 0.3s ease;
+}
+
+/* Efek rotasi miring bergantian agar estetik buatan tangan */
+.gallery-polaroid:nth-child(odd) {
+    transform: rotate(-1.5deg);
+}
+.gallery-polaroid:nth-child(even) {
+    transform: rotate(1.5deg);
+}
+
+.gallery-polaroid:hover {
+    transform: rotate(0deg) scale(1.02);
+}
+
+/* Bingkai Dalam Foto */
+.polaroid-image-frame {
+    width: 100%;
+    aspect-ratio: 4 / 3; 
+    background: #eaeaea;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 2px;
+}
+
+.polaroid-image-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Keterangan Teks Bergaya Tulisan Tangan Romantis */
+.polaroid-caption {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.4rem;
+    color: #333;
+    margin-top: 12px;
+    text-align: center;
+    font-weight: 700;
+}
+
+/* --- LAMAN 3: LETTER --- */
+.letter-box {
+    background: rgba(255, 255, 255, 0.35);
+    padding: 18px;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.3);
+    text-align: justify;
+    max-height: 290px;
+    overflow-y: auto;
+}
+
+.letter-box::-webkit-scrollbar { 
+    width: 4px; 
+}
+.letter-box::-webkit-scrollbar-thumb { 
+    background: rgba(255, 117, 143, 0.6); 
+    border-radius: 10px; 
+}
+
+.letter-box p {
+    font-size: 0.88rem;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.letter-signature {
+    text-align: right;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.4rem;
+    color: #ff3366;
+    margin-top: 12px;
+}
+
+/* --- LAMAN 4: FUTURE --- */
+.future-box {
+    margin: 10px 0;
+}
+
+.romantic-message.emphasis {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #e61a53;
+    line-height: 1.6;
+    font-style: italic;
+}
+
+.secret-note {
+    margin-top: 15px;
+    font-size: 0.88rem;
+    font-style: italic;
+    color: #b3002d;
+    background: rgba(255, 255, 255, 0.6);
+    padding: 10px;
+    border-radius: 10px;
+    border-left: 4px solid #ff477e;
+}
+
+.hidden { 
+    display: none; 
+}
+
+/* ==========================================================================
+   7. BAGIAN KREDIT FOOTER
+   ========================================================================== */
+.credit-footer {
+    margin-top: 20px;
+    font-size: 0.75rem;
+    color: #444;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    padding-top: 10px;
+}
+
+.credit-footer span {
+    font-weight: 600;
+    color: #ff3366;
+    letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   8. ATURAN LAYAR MOBILE (RESPONSIF)
+   ========================================================================== */
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    .main-card { 
+        padding: 20px 15px; 
+        min-height: 480px; 
+    }
+    .tab-btn { 
+        padding: 6px 6px; 
+        font-size: 0.75rem; 
+    }
+    .btn-music {
+        padding: 6px 18px;
+        font-size: 0.8rem;
+    }
+    .romantic-title { 
+        font-size: 2.2rem; 
+    }
+    .section-title { 
+        font-size: 1.8rem; 
+    }
+    .polaroid-caption {
+        font-size: 1.25rem;
+    }
+}
